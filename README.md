@@ -1,0 +1,2 @@
+# gdSmallMods
+ cocosTrailBugFix, EditorHacks, logoAnim
