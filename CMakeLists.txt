@@ -29,3 +29,9 @@ file(GLOB_RECURSE EditorHacks-src src/EditorHacks*)
 add_library(EditorHacks SHARED ${EditorHacks-src} ${curly-eureka-src})
 target_include_directories(EditorHacks PRIVATE ${curly-eureka-incl})
 target_link_libraries(EditorHacks cocos2d)
+
+#btnSFX
+file(GLOB_RECURSE btnSFX-src src/btnSFX*)
+add_library(btnSFX SHARED ${btnSFX-src} ${curly-eureka-src})
+target_include_directories(btnSFX PRIVATE ${curly-eureka-incl})
+target_link_libraries(btnSFX minhook cocos2d)

@@ -1,3 +1,9 @@
+#ueaa
+.vs
+.git
+build
+out
+
 # Prerequisites
 *.d
 
