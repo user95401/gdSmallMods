@@ -35,3 +35,11 @@ file(GLOB_RECURSE btnSFX-src src/btnSFX*)
 add_library(btnSFX SHARED ${btnSFX-src} ${curly-eureka-src})
 target_include_directories(btnSFX PRIVATE ${curly-eureka-incl})
 target_link_libraries(btnSFX minhook cocos2d)
+
+#RandomizeMenuMusic
+file(GLOB_RECURSE RandomizeMenuMusic-src src/RandomizeMenuMusic*)
+add_library(RandomizeMenuMusic SHARED ${RandomizeMenuMusic-src} ${curly-eureka-src})
+target_include_directories(RandomizeMenuMusic PRIVATE ${curly-eureka-incl})
+target_link_libraries(RandomizeMenuMusic minhook cocos2d)
+
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/)
