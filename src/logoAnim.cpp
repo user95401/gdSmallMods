@@ -4,16 +4,17 @@
 #include <cocos2d.h>
 #include <gd.h>
 #include "mod_utils.hpp"
-#include "mapped-hooks.hpp"
+#include "hooks.hpp"
 #include <MinHook.h>
 using namespace cocos2d;
 using namespace gd;
 using namespace cocos2d::extension;
-bool __fastcall MenuLayer_init(MenuLayer* self) {
-    if (!MHook::getOriginal(MenuLayer_init)(self)) return false;
-    CCSprite* GJ_logo_001 = (CCSprite*)self->getChildren()->objectAtIndex(1);
+inline bool(__thiscall* MenuLayer_init)(MenuLayer*);
+bool __fastcall MenuLayer_init_H(MenuLayer* self) {
+    if (!MenuLayer_init(self)) return false;
+    auto GJ_logo_001 = (CCSprite*)(self->getChildren()->objectAtIndex(0));
     GJ_logo_001->runAction(CCRepeatForever::create(CCSequence::create(
-        CCEaseSineInOut::create(CCScaleTo::create(1.0f, 1.1f)), 
+        CCEaseSineInOut::create(CCScaleTo::create(1.0f, 1.05f)), 
         CCEaseSineInOut::create(CCScaleTo::create(1.0, 1.0f)), nullptr)));
     return true;
 }
@@ -28,7 +29,7 @@ DWORD WINAPI thread_func(void* hModule) {
     int sleepMs = distribute(generator);
     Sleep(sleepMs);
 
-    MHook::registerHook(base + 0x1907b0, MenuLayer_init);
+    HOOK(base + 0x1907b0, MenuLayer_init, false);
 
     // enable all hooks you've created with minhook
     MH_EnableHook(MH_ALL_HOOKS);
