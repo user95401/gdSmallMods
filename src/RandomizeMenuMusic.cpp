@@ -1,15 +1,19 @@
 ﻿#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
-#include <random>
+#include <cocos2d.h>
+#include <gd.h>
 #include "mod_utils.hpp"
-#include "mapped-hooks.hpp"
+#include "hooks.hpp"
 #include <MinHook.h>
+using namespace cocos2d;
+using namespace gd;
+using namespace cocos2d::extension;
 
-void __stdcall fadeInMusicHook(const char* filename) {
-    if (filename == std::string("menuLoop.mp3")) {
-        return MHook::getOriginal(fadeInMusicHook)(ModUtils::getRandomFileNameFromDir("Resources/MenuSongs", "menuLoop.mp3").data());
-    }
-    return MHook::getOriginal(fadeInMusicHook)(filename);
+inline void(__stdcall* fadeInMusic)(const char* filename);
+void __stdcall fadeInMusic_H(const char* filename) {
+    if (filename == std::string("menuLoop.mp3"))
+        return fadeInMusic(ModUtils::getRandomFileNameFromDir("Resources/MenuSongs", "menuLoop.mp3").data());
+    return fadeInMusic(filename);
 }
 
 DWORD WINAPI thread_func(void* hModule) {
@@ -17,14 +21,7 @@ DWORD WINAPI thread_func(void* hModule) {
     // initialize minhook
     MH_Initialize();
 
-    std::random_device os_seed;
-    const unsigned int seed = os_seed();
-    std::mt19937 generator(seed);
-    std::uniform_int_distribution<int> distribute(250, 1000);
-    int sleepMs = distribute(generator);
-    Sleep(sleepMs);
-
-    MHook::registerHook(base + 0xC4BD0, fadeInMusicHook);
+    HOOK(base + 0xC4BD0, fadeInMusic, false);
 
     // enable all hooks you've created with minhook
     MH_EnableHook(MH_ALL_HOOKS);

@@ -4,27 +4,21 @@
 #include <cocos2d.h>
 #include <gd.h>
 #include "mod_utils.hpp"
-#include "mapped-hooks.hpp"
+#include "hooks.hpp"
 #include <MinHook.h>
 using namespace cocos2d;
 using namespace gd;
 using namespace cocos2d::extension;
-void __fastcall CCMenuItemSpriteExtra_selected(CCMenuItemSpriteExtra* item) {
-    MHook::getOriginal(CCMenuItemSpriteExtra_selected)(item);
+inline void(__thiscall* CCMenuItemSpriteExtra_selected)(CCMenuItemSpriteExtra*);
+void __fastcall CCMenuItemSpriteExtra_selected_H(CCMenuItemSpriteExtra* item) {
+    CCMenuItemSpriteExtra_selected(item);
     GameSoundManager::sharedState()->playEffect("btnClick.ogg");
 }
 DWORD WINAPI thread_func(void* hModule) {
     // initialize minhook
     MH_Initialize();
 
-    std::random_device os_seed;
-    const unsigned int seed = os_seed();
-    std::mt19937 generator(seed);
-    std::uniform_int_distribution<int> distribute(250, 1000);
-    int sleepMs = distribute(generator);
-    Sleep(sleepMs);
-
-    MHook::registerHook(base + 0x19270, CCMenuItemSpriteExtra_selected);
+    HOOK(base + 0x19270, CCMenuItemSpriteExtra_selected, false);
     
     // enable all hooks you've created with minhook
     MH_EnableHook(MH_ALL_HOOKS);
