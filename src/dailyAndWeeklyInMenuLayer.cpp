@@ -32,7 +32,7 @@ DWORD WINAPI thread_func(void* hModule) {
     // initialize minhook
     MH_Initialize();
 
-    HOOK(base + 0x1907b0, MenuLayer_init, true);
+    HOOK(base + 0x1907b0, MenuLayer_init, false);
 
     // enable all hooks you've created with minhook
     MH_EnableHook(MH_ALL_HOOKS);
