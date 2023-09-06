@@ -2,5 +2,5 @@
 #include "SimpleIni.h"
 using namespace std;
 using namespace gd;
-CSimpleIni ini;
+static CSimpleIni ini;
 void updateIconsCount();

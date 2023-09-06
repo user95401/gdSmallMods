@@ -1,11 +1,5 @@
-﻿#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#include <random>
-#include <cocos2d.h>
-#include <gd.h>
-#include "mod_utils.hpp"
+﻿#include "mod_utils.hpp"
 #include "hooks.hpp"
-#include <MinHook.h>
 using namespace cocos2d;
 using namespace gd;
 using namespace cocos2d::extension;
@@ -104,13 +98,13 @@ CCLabelBMFont* CCLabelBMFont_create_H(const char* str, const char* fntFile) {
 
 DWORD WINAPI thread_func(void* hModule) {
 
-    MH_Initialize();
-    HOOK(base + 0xd1c10, customSetup, false);
-    HOOK(base + 0x1f4ff0, ringJump, false);
-    HOOK(base + 0x10ed50, bumpPlayer, false);
-    HOOK(base + 0x7CAF0, EditorUI_setupCreateMenu, false);//huh
-    HOOK(base + 0x86250, EditorUI_selectObject, false);
-    CC_HOOK("?create@CCLabelBMFont@cocos2d@@SAPAV12@PBD0@Z", CCLabelBMFont_create, false);
+    MH_SafeInitialize();
+    HOOK(base + 0xd1c10, customSetup);
+    HOOK(base + 0x1f4ff0, ringJump);
+    HOOK(base + 0x10ed50, bumpPlayer);
+    HOOK(base + 0x7CAF0, EditorUI_setupCreateMenu);//huh
+    HOOK(base + 0x86250, EditorUI_selectObject);
+    CC_HOOK("?create@CCLabelBMFont@cocos2d@@SAPAV12@PBD0@Z", CCLabelBMFont_create);
     MH_EnableHook(MH_ALL_HOOKS);
 
     ObjectToolbox::sharedState()->addObject(3004, "spiderRing_001.png");

@@ -1,7 +1,5 @@
-﻿#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#include <iostream>
-#include "mod_utils.hpp"
+﻿#include "mod_utils.hpp"
+using namespace gd;
 DWORD WINAPI thread_func(void* hModule) {
     std::string info = "You can configure what hack will work. Everything is enabled by default! To turn off a certain hack, you must replace + to - before that hack's name using a HEX editor. Example: +VerifyHack => -VerifyHack";
     char plus = '+';

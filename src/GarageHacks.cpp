@@ -1,7 +1,5 @@
-﻿#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#include <iostream>
-#include "mod_utils.hpp"
+﻿#include "mod_utils.hpp"
+using namespace gd;
 DWORD WINAPI thread_func(void* hModule) {
     std::string info = "You can disable unlocking of icons or colors: You must replace '+' to '-' Example: +Icons => -Icons";
     char plus = '+';

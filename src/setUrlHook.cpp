@@ -1,12 +1,5 @@
-﻿#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#include "Urlmon.h"
-#include <random>
-#include <cocos2d.h>
-#include <gd.h>
-#include "mod_utils.hpp"
+﻿#include "mod_utils.hpp"
 #include "hooks.hpp"
-#include <MinHook.h>
 using namespace cocos2d;
 using namespace gd;
 using namespace cocos2d::extension;
@@ -63,19 +56,9 @@ void __fastcall CCHttpRequest_setUrl_H(CCHttpRequest* self, void*, const char* u
 }
 
 DWORD WINAPI thread_func(void* hModule) {
-
     // initialize minhook
-    MH_Initialize();
-
-    std::random_device os_seed;
-    const unsigned int seed = os_seed();
-    std::mt19937 generator(seed);
-    std::uniform_int_distribution<int> distribute(250, 1000);
-    int sleepMs = distribute(generator);
-    Sleep(sleepMs);
-
+    MH_SafeInitialize();
     fs::create_directories("config/setUrlHook");
-
     if (!CCFileUtils::sharedFileUtils()->isFileExist("config/setUrlHook/target.cfg")) {
         MessageBoxExA(nullptr, "The «target.cfg» file is not exist in «config/setUrlHook» folder!\nI created it with «http://www.boomlings.com/database».", "setUrlHook mod", MB_ICONERROR | MB_OK, LANG_ENGLISH);
         std::ofstream outfile("config/setUrlHook/target.cfg");
@@ -88,13 +71,10 @@ DWORD WINAPI thread_func(void* hModule) {
         outfile << "http://ykisl.ru/srve/database" << std::endl;
         outfile.close();
     }
-
     //(int)GetProcAddress(GetModuleHandle("libExtensions.dll"), "?setUrl@CCHttpRequest@extension@cocos2d@@QAEXPBD@Z")
-    CCEXT_HOOK("?setUrl@CCHttpRequest@extension@cocos2d@@QAEXPBD@Z", CCHttpRequest_setUrl, false);
-
+    CCEXT_HOOK("?setUrl@CCHttpRequest@extension@cocos2d@@QAEXPBD@Z", CCHttpRequest_setUrl);
     // enable all hooks you've created with minhook
     MH_EnableHook(MH_ALL_HOOKS);
-
     return 0;
 }
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) {

@@ -1,11 +1,5 @@
-﻿#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#include <random>
-#include <cocos2d.h>
-#include <gd.h>
-#include "mod_utils.hpp"
+﻿#include "mod_utils.hpp"
 #include "hooks.hpp"
-#include <MinHook.h>
 using namespace cocos2d;
 using namespace gd;
 using namespace cocos2d::extension;
@@ -34,8 +28,8 @@ void __fastcall LoadingLayer_loadAssets_H(LoadingLayer* self) {
     
 DWORD WINAPI thread_func(void* hModule) {
 
-    MH_Initialize();
-    HOOK(base + 0x18C8E0, LoadingLayer_loadAssets, false);
+    MH_SafeInitialize();
+    HOOK(base + 0x18C8E0, LoadingLayer_loadAssets);
     MH_EnableHook(MH_ALL_HOOKS);
 
     return 0;

@@ -1,10 +1,5 @@
-﻿#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#include <random>
-#include <gd.h>
-#include "mod_utils.hpp"
+﻿#include "mod_utils.hpp"
 #include "hooks.hpp"
-#include <MinHook.h>
 #include <cocos2d.h>
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -20,16 +15,9 @@ bool __fastcall MenuLayer_init_H(MenuLayer* self) {
 }
 DWORD WINAPI thread_func(void* hModule) {
     // initialize minhook
-    MH_Initialize();
+    MH_SafeInitialize();
 
-    std::random_device os_seed;
-    const unsigned int seed = os_seed();
-    std::mt19937 generator(seed);
-    std::uniform_int_distribution<int> distribute(250, 1000);
-    int sleepMs = distribute(generator);
-    Sleep(sleepMs);
-
-    HOOK(base + 0x1907b0, MenuLayer_init, false);
+    HOOK(base + 0x1907b0, MenuLayer_init);
 
     // enable all hooks you've created with minhook
     MH_EnableHook(MH_ALL_HOOKS);

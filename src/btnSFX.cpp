@@ -1,11 +1,5 @@
-﻿#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#include <random>
-#include <cocos2d.h>
-#include <gd.h>
-#include "mod_utils.hpp"
+﻿#include "mod_utils.hpp"
 #include "hooks.hpp"
-#include <MinHook.h>
 using namespace cocos2d;
 using namespace gd;
 using namespace cocos2d::extension;
@@ -16,7 +10,7 @@ void __fastcall CCMenuItemSpriteExtra_selected_H(CCMenuItemSpriteExtra* item) {
 }
 DWORD WINAPI thread_func(void* hModule) {
     // initialize minhook
-    MH_Initialize();
+    MH_SafeInitialize();
 
     HOOK(base + 0x19270, CCMenuItemSpriteExtra_selected, false);
     

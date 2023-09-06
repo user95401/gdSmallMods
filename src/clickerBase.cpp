@@ -1,11 +1,5 @@
-﻿#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#include <random>
-#include <cocos2d.h>
-#include <gd.h>
-#include "mod_utils.hpp"
+﻿#include "mod_utils.hpp"
 #include "hooks.hpp"
-#include <MinHook.h>
 using namespace cocos2d;
 using namespace gd;
 using namespace cocos2d::extension;
@@ -147,10 +141,10 @@ DWORD WINAPI thread_func(void* hModule) {
     LoadLibrary("cocos-explorer.dll");
 
     // initialize minhook
-    MH_Initialize();
+    MH_SafeInitialize();
 
-    HOOK(base + 0x18C8E0, LoadingLayer_loadAssets, true);
-    HOOK(base + 0x1907b0, MenuLayer_init, false);
+    HOOK(base + 0x18C8E0, LoadingLayer_loadAssets);
+    HOOK(base + 0x1907b0, MenuLayer_init);
 
     // enable all hooks you've created with minhook
     MH_EnableHook(MH_ALL_HOOKS);

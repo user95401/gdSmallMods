@@ -1,11 +1,9 @@
 ﻿#include "mod_utils.hpp"
 #include "hooks.hpp"
-#include "SimpleIni.h"
-#include <cocos2d.h>
 using namespace cocos2d;
 using namespace cocos2d::extension;
-using namespace std;
 using namespace gd;
+using namespace std;
 
 #include "private_code/iconsPatch.hpp"
 
