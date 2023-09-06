@@ -3,3 +3,4 @@
 .git
 build
 out
+private_code/*.cpp

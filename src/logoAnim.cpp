@@ -1,14 +1,14 @@
 ﻿#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <random>
-#include <cocos2d.h>
 #include <gd.h>
 #include "mod_utils.hpp"
 #include "hooks.hpp"
 #include <MinHook.h>
+#include <cocos2d.h>
 using namespace cocos2d;
-using namespace gd;
 using namespace cocos2d::extension;
+using namespace gd;
 inline bool(__thiscall* MenuLayer_init)(MenuLayer*);
 bool __fastcall MenuLayer_init_H(MenuLayer* self) {
     if (!MenuLayer_init(self)) return false;
