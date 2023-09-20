@@ -9,16 +9,11 @@ project ("small mods")
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/)
 
 #curly-eureka
-file(GLOB_RECURSE curly-eureka-src ../curly-eureka/*.cpp)
-set(curly-eureka-incl ../curly-eureka/minhook/include ../curly-eureka/gd.h/include ../curly-eureka/gd.h ../curly-eureka)
-add_subdirectory(../curly-eureka/cocos-headers cocos-headers-build)
-add_subdirectory(../curly-eureka/minhook minhook-build)
+include(C:\\Users\\Lenovo\\source\\curly-eureka\\CURLY-EUREKA-INCL.cmake)
 
 macro(setupMod a_name)
 	file(GLOB_RECURSE ${a_name}-src src/${a_name}* private_code/${a_name}*)
-	add_library(${a_name} SHARED ${${a_name}-src} ${curly-eureka-src})
-	target_include_directories(${a_name} PRIVATE ${curly-eureka-incl})
-	target_link_libraries(${a_name} minhook cocos2d)
+	add_library(${a_name} SHARED ${${a_name}-src} ${curly_eureka_src})
 endmacro()
 
 setupMod(logoAnim)

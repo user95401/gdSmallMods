@@ -32,6 +32,7 @@ DWORD WINAPI iconsPatch(void* hModule) {
     MH_SafeInitialize();
     HOOK(base + 0xce440, update);
     MH_EnableHook(MH_ALL_HOOKS);
+    updateIconsCount();
     return 0;
 }
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) {
